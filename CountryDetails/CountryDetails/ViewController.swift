@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     var tableView = UITableView()
     var titleLabel :String?
     var countryDetails = [Rows]()
-    let imageValue = UIImage(named: "Beaver")
+    var refreshControl = UIRefreshControl()
     
     
     override func viewDidLoad() {
@@ -22,6 +22,7 @@ class ViewController: UIViewController {
         configureTableView()
         title = "PhotoApp"
         networkRequestCall()
+        pullToRefresh()
     }
    
     /* intial setting up of tableView*/
@@ -37,6 +38,7 @@ class ViewController: UIViewController {
             self.view.addSubview(tableView)
      }
     
+    /* fetching data from remote api*/
      func networkRequestCall (){
             
             guard let url = URL(string: Url.apiURL) else{return}
@@ -47,12 +49,21 @@ class ViewController: UIViewController {
                     self.titleLabel = results.title
                     self.countryDetails = results.rows ?? []
                     self.tableView.reloadData()
+                    self.refreshControl.endRefreshing()
                 }
             }
         }
     
+     func pullToRefresh() {
+          refreshControl = UIRefreshControl()
+          refreshControl.attributedTitle = NSAttributedString(string: "Loading")
+          refreshControl.addTarget(self, action: #selector(ViewController.populateData), for: UIControl.Event.valueChanged)
+          self.tableView.addSubview(refreshControl)
+     }
     
-        
+     @objc func populateData() {
+         self.networkRequestCall()
+     }
 }
 
 extension ViewController :UITableViewDelegate,UITableViewDataSource {
