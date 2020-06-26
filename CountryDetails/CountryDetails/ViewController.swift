@@ -53,7 +53,7 @@ class ViewController: UIViewController {
                 }
             }
         }
-    
+    /* pull to refresh implemetation*/
      func pullToRefresh() {
           refreshControl = UIRefreshControl()
           refreshControl.attributedTitle = NSAttributedString(string: "Loading")
