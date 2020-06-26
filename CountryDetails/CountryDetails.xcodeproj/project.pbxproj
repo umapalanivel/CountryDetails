@@ -83,7 +83,6 @@
 		53711B5124A651BD00425E9D = {
 			isa = PBXGroup;
 			children = (
-				5316D0C324A664390019D485 /* CustomUIImageView.swift */,
 				53711B5C24A651BD00425E9D /* CountryDetails */,
 				53711B7324A651C100425E9D /* CountryDetailsTests */,
 				53711B7E24A651C100425E9D /* CountryDetailsUITests */,
@@ -104,6 +103,7 @@
 		53711B5C24A651BD00425E9D /* CountryDetails */ = {
 			isa = PBXGroup;
 			children = (
+				5316D0C324A664390019D485 /* CustomUIImageView.swift */,
 				53711B5D24A651BD00425E9D /* AppDelegate.swift */,
 				53711B6124A651BD00425E9D /* ViewController.swift */,
 				5316D0BF24A660DA0019D485 /* CountryModel.swift */,
