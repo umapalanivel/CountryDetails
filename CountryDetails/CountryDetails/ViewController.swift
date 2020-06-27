@@ -8,13 +8,12 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UITableViewController {
     
-    var tableView = UITableView()
+    
     var titleLabel :String?
     var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     var countryDetails = [Rows]()
-    var refreshControl = UIRefreshControl()
     var dataList : [DataModel]  = [DataModel]()
     
     
@@ -37,13 +36,10 @@ class ViewController: UIViewController {
     /* intial setting up of tableView*/
     
      func configureTableView() {
-            
-            tableView = UITableView(frame: self.view.bounds,style: .plain)
-            tableView.delegate = self
-            tableView.dataSource = self
+    
             tableView.showsVerticalScrollIndicator = false
             tableView.register(CountryTableViewCell.self, forCellReuseIdentifier: "Cell")
-            self.view.addSubview(tableView)
+           
      }
     
     /* fetching data from remote api*/
@@ -60,7 +56,7 @@ class ViewController: UIViewController {
                     self.countryDetails = results.rows ?? []
                     self.loadData()
                     self.tableView.reloadData()
-                    self.refreshControl.endRefreshing()
+                   // self.refreshControl.endRefreshing()
                 }
             }
         }
@@ -102,29 +98,27 @@ class ViewController: UIViewController {
                }
             
         }
-}
-
-extension ViewController :UITableViewDelegate,UITableViewDataSource {
-
- 
- func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-     return countryDetails.count
- }
- 
- func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-     
-     let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! CountryTableViewCell
-      let currentLastItem = dataList[indexPath.row]
-      cell.data = currentLastItem
-      return cell
- }
     
-  func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-      return UITableViewAutomaticDimension
-  }
+    // MARK: - UITableView methods
+    
+   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return countryDetails.count
+    }
+    
+   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! CountryTableViewCell
+         let currentLastItem = dataList[indexPath.row]
+         cell.data = currentLastItem
+         return cell
+    }
+       
+     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+         return UITableViewAutomaticDimension
+     }
 
-  func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-      return UITableViewAutomaticDimension
-  }
- 
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+         return UITableViewAutomaticDimension
+     }
 }
+
