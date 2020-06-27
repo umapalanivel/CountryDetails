@@ -80,7 +80,7 @@ class ViewController: UITableViewController {
                                  let imgdata = try? Data(contentsOf: imageUrl)
                                  if imgdata == nil
                                  {
-                                     let img = UIImage(named: "Flag")
+                                     let img = UIImage(named: "NoImage")
                                   self.dataList.append(DataModel(photoImage:img,title: titles,description: descriptions))
                                  }
                                  else

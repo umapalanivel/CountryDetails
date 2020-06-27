@@ -17,7 +17,6 @@
 		53711B7524A651C100425E9D /* CountryDetailsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53711B7424A651C100425E9D /* CountryDetailsTests.swift */; };
 		53711B8024A651C100425E9D /* CountryDetailsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53711B7F24A651C100425E9D /* CountryDetailsUITests.swift */; };
 		53A7D0A324A72D5E00D02E59 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A7D0A224A72D5E00D02E59 /* Extensions.swift */; };
-		53A7D0A624A7461500D02E59 /* NetworkProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5316D0C124A662B60019D485 /* NetworkProcessor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +83,10 @@
 		53711B5124A651BD00425E9D = {
 			isa = PBXGroup;
 			children = (
+				53D33E2D24A7770F00AC3BD9 /* Model */,
+				53D33E2E24A7772400AC3BD9 /* View */,
+				53D33E2F24A7773900AC3BD9 /* ViewModel */,
+				53D33E3024A777C900AC3BD9 /* ViewController */,
 				53711B5C24A651BD00425E9D /* CountryDetails */,
 				53711B7324A651C100425E9D /* CountryDetailsTests */,
 				53711B7E24A651C100425E9D /* CountryDetailsUITests */,
@@ -105,11 +108,6 @@
 			isa = PBXGroup;
 			children = (
 				53711B5D24A651BD00425E9D /* AppDelegate.swift */,
-				53A7D0A224A72D5E00D02E59 /* Extensions.swift */,
-				53711B6124A651BD00425E9D /* ViewController.swift */,
-				5316D0BF24A660DA0019D485 /* CountryModel.swift */,
-				5316D0C124A662B60019D485 /* NetworkProcessor.swift */,
-				5316D0BB24A65F2B0019D485 /* CountryTableViewCell.swift */,
 				53711B6624A651C000425E9D /* Assets.xcassets */,
 				53711B6824A651C000425E9D /* LaunchScreen.storyboard */,
 				53711B6B24A651C000425E9D /* Info.plist */,
@@ -133,6 +131,39 @@
 				53711B8124A651C100425E9D /* Info.plist */,
 			);
 			path = CountryDetailsUITests;
+			sourceTree = "<group>";
+		};
+		53D33E2D24A7770F00AC3BD9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5316D0BF24A660DA0019D485 /* CountryModel.swift */,
+				53A7D0A224A72D5E00D02E59 /* Extensions.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		53D33E2E24A7772400AC3BD9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5316D0BB24A65F2B0019D485 /* CountryTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		53D33E2F24A7773900AC3BD9 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5316D0C124A662B60019D485 /* NetworkProcessor.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		53D33E3024A777C900AC3BD9 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				53711B6124A651BD00425E9D /* ViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -279,7 +310,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				53711B7524A651C100425E9D /* CountryDetailsTests.swift in Sources */,
-				53A7D0A624A7461500D02E59 /* NetworkProcessor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
