@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let rootControoler = UINavigationController()
              // Instantiate  ViewController
             let viewConrtoller = ViewController()
-            rootControoler.addChildViewController(viewConrtoller)
+            rootControoler.addChild(viewConrtoller)
             windowScreen.rootViewController = rootControoler
             windowScreen.backgroundColor = UIColor.white
             windowScreen.makeKeyAndVisible()

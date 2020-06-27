@@ -12,7 +12,7 @@ class ViewController: UITableViewController {
     
     
     var titleLabel :String?
-    var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    var activityIndicator = UIActivityIndicatorView(style: .gray)
     var countryDetails = [Rows]()
     var dataList : [DataModel]  = [DataModel]()
     
@@ -114,11 +114,11 @@ class ViewController: UITableViewController {
     }
        
      func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-         return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
      }
 
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-         return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
      }
 }
 
