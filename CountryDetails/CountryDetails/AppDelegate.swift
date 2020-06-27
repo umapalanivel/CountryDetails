@@ -17,7 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         window = UIWindow(frame:UIScreen.main.bounds)
         if let windowScreen  = window {
-            windowScreen.rootViewController = ViewController()
+            let rootControoler = UINavigationController()
+             // Instantiate  ViewController
+            let viewConrtoller = ViewController()
+            rootControoler.addChildViewController(viewConrtoller)
+            windowScreen.rootViewController = rootControoler
             windowScreen.backgroundColor = UIColor.white
             windowScreen.makeKeyAndVisible()
         }

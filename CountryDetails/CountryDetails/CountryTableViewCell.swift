@@ -10,11 +10,18 @@ import UIKit
 
 class CountryTableViewCell: UITableViewCell {
 
-       var photo = CustomUIImageView()
+       var photo = UIImageView()
        var titleLabel = UILabel()
        var descriptionLabel = UITextView()
-       
-        
+    
+       var data : DataModel? {
+             didSet {
+                photo.image = data?.photoImage
+                titleLabel.text = data?.title
+                descriptionLabel.text = data?.description
+             }
+         }
+    
         override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
             addSubview(photo)
@@ -23,32 +30,24 @@ class CountryTableViewCell: UITableViewCell {
             configurePhotoView()
             configureLableView()
             configureDescriptionView()
-            setConstranitsForPhotoImage()
-            setConstraintsForTitle()
-            setConstranitsForDescription()
+            setConstraints()
+
         }
 
         required init?(coder: NSCoder) {
             fatalError("init(coder:) has not implemented")
         }
         
-        func loadCell(details:Rows){
-            //photo.image = image.photoImage
-            photo.load(urlString: details.imageHref ?? "No Image")
-            titleLabel.text = details.title
-            descriptionLabel.text = details.description
-            
-        }
         
         func configurePhotoView(){
             photo.layer.cornerRadius = 10
             photo.clipsToBounds = true
-           // photo.load(urlString: url)
         }
         
         func configureDescriptionView(){
-    //        photo.layer.cornerRadius = 10
-    //        photo.clipsToBounds = true
+             descriptionLabel.textColor = .black
+             descriptionLabel.font = UIFont.systemFont(ofSize: 12)
+             descriptionLabel.textAlignment = .justified
         }
         
         func configureLableView(){
@@ -56,32 +55,12 @@ class CountryTableViewCell: UITableViewCell {
            titleLabel.adjustsFontSizeToFitWidth = true
         }
         
-        func setConstranitsForPhotoImage(){
-            photo.translatesAutoresizingMaskIntoConstraints                                       = false
-            photo.centerYAnchor.constraint(equalTo: centerYAnchor).isActive                       = true
-            photo.leadingAnchor.constraint(equalTo: leadingAnchor,constant: 12).isActive          = true
-            photo.heightAnchor.constraint(equalToConstant: 60).isActive                           = true
-            photo.widthAnchor.constraint(equalTo: photo.heightAnchor,multiplier: 10/9).isActive   = true
-        }
-        
-        func setConstraintsForTitle() {
+        func setConstraints() {
             
-            titleLabel.translatesAutoresizingMaskIntoConstraints                                       = false
-            titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor,constant:-30).isActive                       = true
-            
-            titleLabel.leadingAnchor.constraint(equalTo: photo.trailingAnchor,constant: 20).isActive   = true
-            titleLabel.heightAnchor.constraint(equalToConstant: 20).isActive                           = true
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor,constant: -12).isActive       = true
-            
+            photo.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 0, width: 120, height: 120, enableInsets: false)
+             titleLabel.anchor(top: topAnchor, left: photo.rightAnchor, bottom: nil, right: nil, paddingTop: 5, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: frame.size.width / 2, height: 0, enableInsets: false)
+            descriptionLabel.anchor(top: titleLabel.bottomAnchor, left: photo.rightAnchor, bottom: nil, right: nil, paddingTop: 5, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: frame.size.width / 1.5 , height: 80, enableInsets: false)
         }
-        
-        func setConstranitsForDescription(){
-            descriptionLabel.translatesAutoresizingMaskIntoConstraints                                       = false
-        
-            descriptionLabel.leadingAnchor.constraint(equalTo: photo.trailingAnchor,constant: 20).isActive   = true
-            descriptionLabel.topAnchor.constraint(equalTo: titleLabel.centerYAnchor,constant:10).isActive = true
-            descriptionLabel.heightAnchor.constraint(equalToConstant: 200).isActive                           = true
-            descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor,constant: -12).isActive       = true
-        }
+
 
 }

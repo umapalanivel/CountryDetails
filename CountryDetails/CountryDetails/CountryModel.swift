@@ -9,6 +9,13 @@
 import Foundation
 import UIKit
 
+struct DataModel {
+    var photoImage : UIImage?
+    var title      :String
+    var description :String
+    
+}
+
 struct WebDetails:Codable {
     let title :String
     let rows : [Rows]?

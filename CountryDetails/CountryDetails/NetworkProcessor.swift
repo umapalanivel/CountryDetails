@@ -25,6 +25,7 @@ class NetworkProcessor {
     func downLoadJSONFromURL(completion: @escaping jsonDictionaryHandler){
         
         let request = URLRequest(url: self.url)
+        
         let dataTask = session.dataTask(with: request) { (data,response,error) in
             
             if error == nil {

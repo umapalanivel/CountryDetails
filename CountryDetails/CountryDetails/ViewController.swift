@@ -12,17 +12,26 @@ class ViewController: UIViewController {
     
     var tableView = UITableView()
     var titleLabel :String?
+    var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     var countryDetails = [Rows]()
     var refreshControl = UIRefreshControl()
+    var dataList : [DataModel]  = [DataModel]()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         configureTableView()
-        title = "PhotoApp"
         networkRequestCall()
-        pullToRefresh()
+        refreshBtn()
+        
+        //Adding activityIndicator while downloading
+               activityIndicator.startAnimating()
+               activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+               view.addSubview(activityIndicator)
+               activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+               activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+               
     }
    
     /* intial setting up of tableView*/
@@ -32,7 +41,6 @@ class ViewController: UIViewController {
             tableView = UITableView(frame: self.view.bounds,style: .plain)
             tableView.delegate = self
             tableView.dataSource = self
-            tableView.rowHeight = 230
             tableView.showsVerticalScrollIndicator = false
             tableView.register(CountryTableViewCell.self, forCellReuseIdentifier: "Cell")
             self.view.addSubview(tableView)
@@ -46,24 +54,54 @@ class ViewController: UIViewController {
             networkProcessor.downLoadJSONFromURL{(results) in
                 DispatchQueue.main.async { [unowned self] in
                     print(results.title)
+                    self.activityIndicator.stopAnimating()
                     self.titleLabel = results.title
+                    self.title = self.titleLabel
                     self.countryDetails = results.rows ?? []
+                    self.loadData()
                     self.tableView.reloadData()
                     self.refreshControl.endRefreshing()
                 }
             }
         }
     /* pull to refresh implemetation*/
-     func pullToRefresh() {
-          refreshControl = UIRefreshControl()
-          refreshControl.attributedTitle = NSAttributedString(string: "Loading")
-          refreshControl.addTarget(self, action: #selector(ViewController.populateData), for: UIControl.Event.valueChanged)
-          self.tableView.addSubview(refreshControl)
+     func refreshBtn() {
+          //Add reload button
+          let rightButton = UIBarButtonItem(title: "Reload", style: UIBarButtonItem.Style.plain, target: self, action: #selector(populateData))
+          self.navigationItem.rightBarButtonItem = rightButton
      }
     
      @objc func populateData() {
+         activityIndicator.startAnimating()
          self.networkRequestCall()
      }
+    
+    func loadData()  {
+    
+            for values in self.countryDetails  {
+                 let titles = values.title ?? "No title available"
+                 //Loading default description for nil value from json
+                 let descriptions = values.description ?? "No Description available"
+                      if let imageUrl = URL(string: values.imageHref ?? "nil"){
+                                 
+                                 let imgdata = try? Data(contentsOf: imageUrl)
+                                 if imgdata == nil
+                                 {
+                                     let img = UIImage(named: "Flag")//Place the default image from assets if imageurl not found
+                                  self.dataList.append(DataModel(photoImage:img,title: titles,description: descriptions))
+                                 }
+                                 else
+                                 {
+                                     let image = UIImage(data: imgdata!)
+                                     self.dataList.append(DataModel(photoImage:image,title: titles,description: descriptions))
+                                 }
+                         
+                      
+                             
+                         }
+               }
+            
+        }
 }
 
 extension ViewController :UITableViewDelegate,UITableViewDataSource {
@@ -76,9 +114,17 @@ extension ViewController :UITableViewDelegate,UITableViewDataSource {
  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
      
      let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! CountryTableViewCell
-     let detailsList = countryDetails[indexPath.row]
-     cell.loadCell(details: detailsList)
-     return cell
+      let currentLastItem = dataList[indexPath.row]
+      cell.data = currentLastItem
+      return cell
  }
+    
+  func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+      return UITableViewAutomaticDimension
+  }
+
+  func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+      return UITableViewAutomaticDimension
+  }
  
 }
