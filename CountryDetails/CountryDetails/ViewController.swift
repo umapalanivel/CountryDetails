@@ -36,10 +36,8 @@ class ViewController: UITableViewController {
     /* intial setting up of tableView*/
     
      func configureTableView() {
-    
             tableView.showsVerticalScrollIndicator = false
             tableView.register(CountryTableViewCell.self, forCellReuseIdentifier: "Cell")
-           
      }
     
     /* fetching data from remote api*/
@@ -56,8 +54,7 @@ class ViewController: UITableViewController {
                     self.countryDetails = results.rows ?? []
                     self.loadData()
                     self.tableView.reloadData()
-                   // self.refreshControl.endRefreshing()
-                }
+                   }
             }
         }
     /* pull to refresh implemetation*/
@@ -79,11 +76,11 @@ class ViewController: UITableViewController {
                  //Loading default description for nil value from json
                  let descriptions = values.description ?? "No Description available"
                       if let imageUrl = URL(string: values.imageHref ?? "nil"){
-                                 
+                                //Place the default image from assets if imageurl not found
                                  let imgdata = try? Data(contentsOf: imageUrl)
                                  if imgdata == nil
                                  {
-                                     let img = UIImage(named: "Flag")//Place the default image from assets if imageurl not found
+                                     let img = UIImage(named: "Flag")
                                   self.dataList.append(DataModel(photoImage:img,title: titles,description: descriptions))
                                  }
                                  else
