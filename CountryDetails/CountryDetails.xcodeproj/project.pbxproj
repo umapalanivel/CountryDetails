@@ -17,7 +17,6 @@
 		53711B7524A651C100425E9D /* CountryDetailsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53711B7424A651C100425E9D /* CountryDetailsTests.swift */; };
 		53711B8024A651C100425E9D /* CountryDetailsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53711B7F24A651C100425E9D /* CountryDetailsUITests.swift */; };
 		53A7D0A324A72D5E00D02E59 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A7D0A224A72D5E00D02E59 /* Extensions.swift */; };
-		53A7D0A524A7332D00D02E59 /* Flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A7D0A424A7332D00D02E59 /* Flag.png */; };
 		53A7D0A624A7461500D02E59 /* NetworkProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5316D0C124A662B60019D485 /* NetworkProcessor.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,7 +54,6 @@
 		53711B7F24A651C100425E9D /* CountryDetailsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryDetailsUITests.swift; sourceTree = "<group>"; };
 		53711B8124A651C100425E9D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		53A7D0A224A72D5E00D02E59 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		53A7D0A424A7332D00D02E59 /* Flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Flag.png; path = ../../../../Flag.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,7 +111,6 @@
 				5316D0C124A662B60019D485 /* NetworkProcessor.swift */,
 				5316D0BB24A65F2B0019D485 /* CountryTableViewCell.swift */,
 				53711B6624A651C000425E9D /* Assets.xcassets */,
-				53A7D0A424A7332D00D02E59 /* Flag.png */,
 				53711B6824A651C000425E9D /* LaunchScreen.storyboard */,
 				53711B6B24A651C000425E9D /* Info.plist */,
 			);
@@ -242,7 +239,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				53A7D0A524A7332D00D02E59 /* Flag.png in Resources */,
 				53711B6A24A651C000425E9D /* LaunchScreen.storyboard in Resources */,
 				53711B6724A651C000425E9D /* Assets.xcassets in Resources */,
 			);
