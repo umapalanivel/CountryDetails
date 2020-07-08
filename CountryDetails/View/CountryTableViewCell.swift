@@ -17,7 +17,12 @@ class CountryTableViewCell: UITableViewCell {
     
        var data : DataModel? {
              didSet {
-                photo.image = data?.photoImage
+                //photo.image = data?.photoImage
+                if let imageUrl = data?.imageURL{
+                    photo.load(urlString: imageUrl)
+                }else{
+                    photo.image = UIImage(named: "NoImage")
+                }
                 titleLabel.text = data?.title
                 descriptionLabel.text = data?.description
              }
@@ -54,6 +59,8 @@ class CountryTableViewCell: UITableViewCell {
 
             photo.translatesAutoresizingMaskIntoConstraints = false
             photo.contentMode = .scaleAspectFit
+            photo.clipsToBounds = true
+            
         }
         
         func configureDescriptionView(){
@@ -89,7 +96,7 @@ class CountryTableViewCell: UITableViewCell {
         photo.widthAnchor.constraint(equalToConstant: 70.0).isActive = true
         photo.heightAnchor.constraint(lessThanOrEqualToConstant: 70.0).isActive = true
         
-        stackkView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 5).isActive = true
+        stackkView.topAnchor.constraint(equalTo: photo.topAnchor, constant: -3).isActive = true
         stackkView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -5).isActive = true
         stackkView.leadingAnchor.constraint(equalTo: self.photo.trailingAnchor, constant: 10).isActive = true
         stackkView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -5).isActive = true
@@ -97,5 +104,12 @@ class CountryTableViewCell: UITableViewCell {
         titleLabel.widthAnchor.constraint(equalTo: self.stackkView.widthAnchor, multiplier: 0).isActive = true
         descriptionLabel.widthAnchor.constraint(equalTo: self.stackkView.widthAnchor, multiplier: 0).isActive = true
     }
+    
+    
+//    override func prepareForReuse() {
+//           titleLabel.text = ""
+//           descriptionLabel.text = ""
+//           photo.image = nil
+//       }
 
 }

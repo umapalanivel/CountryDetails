@@ -13,12 +13,12 @@ class CountryDetailsTests: XCTestCase {
     
     let networkManager = NetworkProcessor(url: URL(string: Url.apiURL)!)
        
-       let numberOfRows = [Rows]()
+       var numberOfRows = [Rows]()
        func testApiCall() {
 
            let expectation = XCTestExpectation(description: "response")
            networkManager.downLoadJSONFromURL{(results) in
-               numberOfRows = results.rows
+            self.numberOfRows = results.rows!
                
                
            }

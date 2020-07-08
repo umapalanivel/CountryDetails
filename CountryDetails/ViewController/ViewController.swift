@@ -8,21 +8,26 @@
 
 import UIKit
 
-class ViewController: UITableViewController {
+class ViewController: UITableViewController,ViewModelDelegate {
     
-    
+    let viewModel = ViewModel()
     var titleLabel :String?
     var activityIndicator = UIActivityIndicatorView(style: .gray)
     var countryDetails = [Rows]()
     var dataList : [DataModel]  = [DataModel]()
+    var refreshCtrl = UIRefreshControl()
+    var image = UIImage()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        viewModel.delegate = self
+        viewModel.downloadDataFromServer()
+        updateUIEvents()
         configureTableView()
-        networkRequestCall()
-        refreshBtn()
+        pullToRefresh()
         
         //Adding activityIndicator while downloading
                activityIndicator.startAnimating()
@@ -40,72 +45,80 @@ class ViewController: UITableViewController {
             tableView.register(CountryTableViewCell.self, forCellReuseIdentifier: "Cell")
      }
     
-    /* fetching data from remote api*/
-     func networkRequestCall (){
+     func updateUIEvents (){
             
-            guard let url = URL(string: Url.apiURL) else{return}
-            let networkProcessor = NetworkProcessor(url: url)
-            networkProcessor.downLoadJSONFromURL{(results) in
+
                 DispatchQueue.main.async { [unowned self] in
-                    print(results.title)
+                
                     self.activityIndicator.stopAnimating()
-                    self.titleLabel = results.title
-                    self.title = self.titleLabel
-                    self.countryDetails = results.rows ?? []
-                    self.loadData()
-                    self.tableView.reloadData()
+                    self.refreshCtrl.endRefreshing()
+ 
+                    
                    }
             }
-        }
+    
     /* pull to refresh implemetation*/
-     func refreshBtn() {
-          //Add reload button
-          let rightButton = UIBarButtonItem(title: "Reload", style: UIBarButtonItem.Style.plain, target: self, action: #selector(populateData))
-          self.navigationItem.rightBarButtonItem = rightButton
+     func pullToRefresh() {
+        
+        refreshCtrl = UIRefreshControl()
+        refreshCtrl.attributedTitle = NSAttributedString(string: "Loading")
+        refreshCtrl.addTarget(self, action: #selector(ViewController.populateData), for: UIControl.Event.valueChanged)
+        self.tableView.addSubview(refreshCtrl)
+        
+     
      }
     
      @objc func populateData() {
-         activityIndicator.startAnimating()
-         self.networkRequestCall()
+         viewModel.downloadDataFromServer()
+         self.updateUIEvents()
      }
     
-    func loadData()  {
+
     
-            for values in self.countryDetails  {
-                 let titles = values.title ?? "No title available"
-                 //Loading default description for nil value from json
-                 let descriptions = values.description ?? "No Description available"
-                      if let imageUrl = URL(string: values.imageHref ?? "nil"){
-                                //Place the default image from assets if imageurl not found
-                                 let imgdata = try? Data(contentsOf: imageUrl)
-                                 if imgdata == nil
-                                 {
-                                     let img = UIImage(named: "NoImage")
-                                  self.dataList.append(DataModel(photoImage:img,title: titles,description: descriptions))
-                                 }
-                                 else
-                                 {
-                                     let image = UIImage(data: imgdata!)
-                                     self.dataList.append(DataModel(photoImage:image,title: titles,description: descriptions))
-                                 }
-                         
-                      
-                             
-                         }
-               }
-            
+    
+  func updateTitle() {
+      
+      DispatchQueue.main.async {
+          self.title = self.viewModel.titleForViewController
+        
+        if(self.viewModel.errorMsg != nil) {
+            let alert = UIAlertController(title: "Error", message: self.viewModel.errorMsg, preferredStyle: UIAlertController.Style.alert)
+
+            // add an action (button)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+
+            // show the alert
+            self.present(alert, animated: true, completion: nil)
         }
+      }
+      
+  }
+  
+    func didFinishUpdates() {
+           
+           DispatchQueue.main.async {
+              
+               self.tableView?.reloadData()
+           }
+           
+           
+       }
+    
+                            
+                    
+
     
     // MARK: - UITableView methods
     
    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return countryDetails.count
+        return viewModel.dataList.count
     }
     
    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+    
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! CountryTableViewCell
-         let currentLastItem = dataList[indexPath.row]
+        let currentLastItem = viewModel.dataList[indexPath.row]
          cell.data = currentLastItem
          return cell
     }
@@ -117,5 +130,9 @@ class ViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
      }
+    
+
+        
 }
+
 

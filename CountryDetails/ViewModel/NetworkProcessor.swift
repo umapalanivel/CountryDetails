@@ -19,7 +19,7 @@ class NetworkProcessor {
         self.url = url
     }
     
-    typealias jsonDictionaryHandler = ((WebDetails) -> Void)
+    typealias jsonDictionaryHandler = ((WebDetails?,Error?) -> Void)
     
     /* NetworkRequest to download data from api */
     func downLoadJSONFromURL(completion: @escaping jsonDictionaryHandler){
@@ -33,13 +33,13 @@ class NetworkProcessor {
                 guard let string = String(data: data, encoding: String.Encoding.isoLatin1) else { return }
                 guard let properData = string.data(using: .utf8, allowLossyConversion: true) else { return }
                 do{
-                  let facts = try JSONDecoder().decode(WebDetails.self, from: properData)
-                  completion(facts)
+                  let values = try JSONDecoder().decode(WebDetails.self, from: properData)
+                    completion(values, nil)
                 } catch let error {
-                print(error)
+                completion(nil, error)
                 }
             } else {
-                print(error)
+               completion(nil, error)
             }
         }
         dataTask.resume()
