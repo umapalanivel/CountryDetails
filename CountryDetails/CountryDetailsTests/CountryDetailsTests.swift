@@ -7,27 +7,22 @@
 //
 
 import XCTest
-@testable import CountryDetails
+
+import Mocker
 
 class CountryDetailsTests: XCTestCase {
     
-    let networkManager = NetworkProcessor(url: URL(string: Url.apiURL)!)
-       
-       var numberOfRows = [Rows]()
-       func testApiCall() {
-
-           let expectation = XCTestExpectation(description: "response")
-           networkManager.downLoadJSONFromURL{(results) in
-            self.numberOfRows = results.rows!
-               
-               
-           }
-           
-           XCTAssertNotNil(numberOfRows)
-           wait(for: [expectation], timeout: 1)
-       }
-       
-
+    static let titleValue = "About Canada"
+    struct WebDetails {
+        let title: String?
+        let rows: [[String:Any]]?
+        
+        init(jsonDictionary: [String: Any]) {
+            title = jsonDictionary["title"] as? String
+            rows = jsonDictionary["rows"] as? [[String:Any]]
+        }
+    }
+   
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -37,51 +32,77 @@ class CountryDetailsTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    /*Test case for valid server response*/
+    func testJSONResponse() {
+          let expectation = self.expectation(description: "API RESPONSE")
+          let originalURL = URL(string: "https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/facts.json")!
+         
+              let mockData = Mock(url: originalURL, dataType: .json, statusCode: 200, data: [
+              .get: MockDataModel.mockJSON.data
+              ]
+          )
+              mockData.register()
+          
+          URLSession.shared.dataTask(with: originalURL) { (data, _, _) in
+
+              guard let data = data, let jsonDictionary = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String: Any] else {
+                  XCTFail("Wrong data response")
+                  expectation.fulfill()
+                  return
+              }
+              
+           
+              let framework = WebDetails.init(jsonDictionary: jsonDictionary)
+             
+            XCTAssert(framework.title == CountryDetailsTests.titleValue)
+              XCTAssert(framework.rows!.count > 0)
+              
+              
+              expectation.fulfill()
+          }.resume()
+          
+          waitForExpectations(timeout: 10.0, handler: nil)
+      }
+    
+    /*Test case for internal server error*/
+    func testMockReturningError() {
+           let expectation = self.expectation(description: "Data request should succeed")
+           let originalURL = URL(string: "https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/facts.json")!
+
+           enum TestExampleError: Error {
+               case example
+           }
+           
+           Mock(url: originalURL, dataType: .json, statusCode: 500, data: [.get: Data()], requestError: TestExampleError.example).register()
+           
+           URLSession.shared.dataTask(with: originalURL) { (data, urlresponse, err) in
+
+               XCTAssertNil(data)
+               XCTAssertNil(urlresponse)
+               XCTAssertNotNil(err)
+               if let err = err {
+                   XCTAssertEqual("example", String(describing: err))
+               }
+               
+               expectation.fulfill()
+           }.resume()
+           
+           waitForExpectations(timeout: 10.0, handler: nil)
+       }
+    
+    /*Test case for successful response code*/
+    func testOnRequestExpectation() {
+        let url = URL(string: "https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/facts.json")!
+
+        var mock = Mock(url: url, dataType: .json, statusCode: 200, data: [.get: Data()])
+        let expectation = expectationForRequestingMock(&mock)
+        mock.register()
+
+        URLSession.shared.dataTask(with: URLRequest(url: url)).resume()
+
+        wait(for: [expectation], timeout: 2.0)
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
 
 }
 
-class MockURLProtocol: URLProtocol {
-    
-    static var requestHandler: ((URLRequest) throws -> (HTTPURLResponse, Data))?
-    
-    override func startLoading() {
-        
-        guard let handler = MockURLProtocol.requestHandler else {
-            XCTFail("Received unexpected request with no handler set")
-            return
-        }
-        
-        do {
-            let (response, data) = try handler(request)
-            client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
-            client?.urlProtocol(self, didLoad: data)
-            client?.urlProtocolDidFinishLoading(self)
-        } catch {
-            client?.urlProtocol(self, didFailWithError: error)
-        }
-        
-    }
-    
-    override func stopLoading() {
-        // Required by the superclass.
-    }
-    
-    override class func canInit(with request: URLRequest) -> Bool {
-        return true
-    }
-    
-    override class func canonicalRequest(for request: URLRequest) -> URLRequest {
-        return request
-    }
-}

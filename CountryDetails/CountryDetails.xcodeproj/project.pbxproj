@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,6 +12,9 @@
 		5316D0C224A662B60019D485 /* NetworkProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5316D0C124A662B60019D485 /* NetworkProcessor.swift */; };
 		5318F50C24B4B342005263B2 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5318F50B24B4B342005263B2 /* ViewModel.swift */; };
 		5318F50E24B4DEB0005263B2 /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5318F50D24B4DEB0005263B2 /* UIImageView+Extensions.swift */; };
+		5318F5FD24B612D5005263B2 /* Mocker in Frameworks */ = {isa = PBXBuildFile; productRef = 5318F5FC24B612D5005263B2 /* Mocker */; };
+		5318F5FF24B613DA005263B2 /* SampleAPIResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 5318F5FE24B613DA005263B2 /* SampleAPIResponse.json */; };
+		5318F60124B61732005263B2 /* MockDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5318F60024B61732005263B2 /* MockDataModel.swift */; };
 		53711B5E24A651BD00425E9D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53711B5D24A651BD00425E9D /* AppDelegate.swift */; };
 		53711B6224A651BD00425E9D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53711B6124A651BD00425E9D /* ViewController.swift */; };
 		53711B6724A651C000425E9D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53711B6624A651C000425E9D /* Assets.xcassets */; };
@@ -43,6 +46,8 @@
 		5316D0C124A662B60019D485 /* NetworkProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProcessor.swift; sourceTree = "<group>"; };
 		5318F50B24B4B342005263B2 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		5318F50D24B4DEB0005263B2 /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
+		5318F5FE24B613DA005263B2 /* SampleAPIResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SampleAPIResponse.json; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.json; };
+		5318F60024B61732005263B2 /* MockDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataModel.swift; sourceTree = "<group>"; };
 		53711B5A24A651BD00425E9D /* CountryDetails.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CountryDetails.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53711B5D24A651BD00425E9D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		53711B6124A651BD00425E9D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -62,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5318F5FD24B612D5005263B2 /* Mocker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,7 +127,9 @@
 			isa = PBXGroup;
 			children = (
 				53711B7424A651C100425E9D /* CountryDetailsTests.swift */,
+				5318F5FE24B613DA005263B2 /* SampleAPIResponse.json */,
 				53711B7624A651C100425E9D /* Info.plist */,
+				5318F60024B61732005263B2 /* MockDataModel.swift */,
 			);
 			path = CountryDetailsTests;
 			sourceTree = "<group>";
@@ -185,6 +193,9 @@
 			dependencies = (
 			);
 			name = CountryDetails;
+			packageProductDependencies = (
+				5318F5FC24B612D5005263B2 /* Mocker */,
+			);
 			productName = CountryDetails;
 			productReference = 53711B5A24A651BD00425E9D /* CountryDetails.app */;
 			productType = "com.apple.product-type.application";
@@ -257,6 +268,9 @@
 				Base,
 			);
 			mainGroup = 53711B5124A651BD00425E9D;
+			packageReferences = (
+				5318F5FB24B612D5005263B2 /* XCRemoteSwiftPackageReference "Mocker" */,
+			);
 			productRefGroup = 53711B5B24A651BD00425E9D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -282,6 +296,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5318F5FF24B613DA005263B2 /* SampleAPIResponse.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,6 +329,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				53711B7524A651C100425E9D /* CountryDetailsTests.swift in Sources */,
+				5318F60124B61732005263B2 /* MockDataModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -471,8 +487,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				INFOPLIST_FILE = CountryDetails/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -490,8 +507,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				INFOPLIST_FILE = CountryDetails/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -511,7 +529,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = CountryDetailsTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -532,7 +550,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = CountryDetailsTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -624,6 +642,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5318F5FB24B612D5005263B2 /* XCRemoteSwiftPackageReference "Mocker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WeTransfer/Mocker.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5318F5FC24B612D5005263B2 /* Mocker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5318F5FB24B612D5005263B2 /* XCRemoteSwiftPackageReference "Mocker" */;
+			productName = Mocker;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 53711B5224A651BD00425E9D /* Project object */;
 }
