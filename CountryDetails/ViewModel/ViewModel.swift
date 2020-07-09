@@ -7,11 +7,8 @@
 //
 
 protocol ViewModelDelegate: class {
-    func updateTitle()  // Title update
-    
-    func didFinishUpdates()// update each row
-    
-  //  func stopLoadingLoader() // stop loader
+    func updateTitle()
+    func didFinishUpdates()
 }
 
 
@@ -29,7 +26,6 @@ class ViewModel
 
     func downloadDataFromServer() {
         
-        dataList.removeAll()
         guard let url = URL(string: Url.apiURL) else{return}
         let networkProcessor = NetworkProcessor(url: url)
         networkProcessor.downLoadJSONFromURL{(results,error) in
@@ -38,18 +34,14 @@ class ViewModel
             self.errorMsg = errorMsg
             self.titleForViewController = results?.title
             self.countryDetails = results?.rows ?? []
-            
-//            DispatchQueue.global().async {
-                self.loadData()
-                
- //           }
-            
+            self.loadData()
         }
     
     }
     
     func loadData()  {
           
+            dataList.removeAll()
             for values in self.countryDetails  {
                  let titles = values.title ?? "No title available"
               //Loading default description for nil value from json
