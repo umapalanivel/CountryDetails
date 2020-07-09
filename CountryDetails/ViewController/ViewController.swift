@@ -13,14 +13,13 @@ class ViewController: UITableViewController,ViewModelDelegate {
     let viewModel = ViewModel()
     var titleLabel :String?
     var activityIndicator = UIActivityIndicatorView(style: .gray)
-//    var countryDetails = [Rows]()
-//    var dataList : [DataModel]  = [DataModel]()
     var refreshCtrl = UIRefreshControl()
     var image = UIImage()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Do any additional setup after loading the view.
         
         viewModel.delegate = self
@@ -66,16 +65,16 @@ class ViewController: UITableViewController,ViewModelDelegate {
      }
     
    /*viewmodel delegate method to update UI on main thread and display alertview for error msg*/
-  func updateTitle() {
-      DispatchQueue.main.async {
-          self.title = self.viewModel.titleForViewController
-          if(self.viewModel.errorMsg != nil) {
-            let alert = UIAlertController(title: "Error", message: self.viewModel.errorMsg, preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        }
+    func updateTitle() {
+         DispatchQueue.main.async {
+             self.title = self.viewModel.titleForViewController
+                if(self.viewModel.errorMsg != nil) {
+                  let alert = UIAlertController(title: "Error", message: self.viewModel.errorMsg, preferredStyle: UIAlertController.Style.alert)
+                  alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                 self.present(alert, animated: true, completion: nil)
+             }
+          }
       }
-    }
   
     func didFinishUpdates() {
            DispatchQueue.main.async {
