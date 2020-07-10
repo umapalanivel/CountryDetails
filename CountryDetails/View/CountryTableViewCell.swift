@@ -17,7 +17,6 @@ class CountryTableViewCell: UITableViewCell {
     
        var data : DataModel? {
              didSet {
-                //photo.image = data?.photoImage
                 if let imageUrl = data?.imageURL{
                     photo.load(urlString: imageUrl)
                 }else{
@@ -106,10 +105,6 @@ class CountryTableViewCell: UITableViewCell {
     }
     
     
-//    override func prepareForReuse() {
-//           titleLabel.text = ""
-//           descriptionLabel.text = ""
-//           photo.image = nil
-//       }
+
 
 }
