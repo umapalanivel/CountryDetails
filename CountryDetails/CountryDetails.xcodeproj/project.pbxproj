@@ -22,6 +22,7 @@
 		53711B7524A651C100425E9D /* CountryDetailsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53711B7424A651C100425E9D /* CountryDetailsTests.swift */; };
 		53711B8024A651C100425E9D /* CountryDetailsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53711B7F24A651C100425E9D /* CountryDetailsUITests.swift */; };
 		5372B28624C959FA00899089 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5372B28524C959FA00899089 /* Reachability.swift */; };
+		5372B28E24CA07EE00899089 /* Flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 5372B28A24C9704300899089 /* Flag.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -302,6 +303,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5318F5FF24B613DA005263B2 /* SampleAPIResponse.json in Resources */,
+				5372B28E24CA07EE00899089 /* Flag.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
