@@ -13,6 +13,7 @@ import UIKit
 
 public final class MockDataModel {
     public static let mockJSON: URL = Bundle(for: MockDataModel.self).url(forResource: "SampleAPIResponse", withExtension: "json")!
+    public static let imageFileUrl: URL = Bundle(for: MockDataModel.self).url(forResource: "Flag", withExtension: "png")!
 }
 
 internal extension URL {

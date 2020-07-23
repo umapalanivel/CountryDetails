@@ -21,6 +21,7 @@
 		53711B6A24A651C000425E9D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53711B6824A651C000425E9D /* LaunchScreen.storyboard */; };
 		53711B7524A651C100425E9D /* CountryDetailsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53711B7424A651C100425E9D /* CountryDetailsTests.swift */; };
 		53711B8024A651C100425E9D /* CountryDetailsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53711B7F24A651C100425E9D /* CountryDetailsUITests.swift */; };
+		5372B28624C959FA00899089 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5372B28524C959FA00899089 /* Reachability.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,8 @@
 		53711B7B24A651C100425E9D /* CountryDetailsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CountryDetailsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		53711B7F24A651C100425E9D /* CountryDetailsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryDetailsUITests.swift; sourceTree = "<group>"; };
 		53711B8124A651C100425E9D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5372B28524C959FA00899089 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		5372B28A24C9704300899089 /* Flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Flag.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				53711B7424A651C100425E9D /* CountryDetailsTests.swift */,
+				5372B28A24C9704300899089 /* Flag.png */,
 				5318F5FE24B613DA005263B2 /* SampleAPIResponse.json */,
 				53711B7624A651C100425E9D /* Info.plist */,
 				5318F60024B61732005263B2 /* MockDataModel.swift */,
@@ -147,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				5316D0BF24A660DA0019D485 /* CountryModel.swift */,
+				5372B28524C959FA00899089 /* Reachability.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -320,6 +325,7 @@
 				5316D0C024A660DA0019D485 /* CountryModel.swift in Sources */,
 				53711B5E24A651BD00425E9D /* AppDelegate.swift in Sources */,
 				5316D0C224A662B60019D485 /* NetworkProcessor.swift in Sources */,
+				5372B28624C959FA00899089 /* Reachability.swift in Sources */,
 				5318F50C24B4B342005263B2 /* ViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

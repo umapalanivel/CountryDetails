@@ -24,10 +24,11 @@ class CountryTableViewCell: UITableViewCell {
                 }
                 titleLabel.text = data?.title
                 descriptionLabel.text = data?.description
+    
              }
          }
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+       override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
               backgroundColor = .clear
               
@@ -63,6 +64,7 @@ class CountryTableViewCell: UITableViewCell {
         }
         
         func configureDescriptionView(){
+           
             descriptionLabel.font = UIFont.systemFont(ofSize: 14)
             descriptionLabel.textColor = .black
             descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -72,6 +74,7 @@ class CountryTableViewCell: UITableViewCell {
         }
         
         func configureLableView(){
+           
             titleLabel.font = UIFont.systemFont(ofSize: 18)
             titleLabel.textColor = UIColor(red: 35.0/255.0, green: 70.0/255.0, blue: 120.0/255.0, alpha: 1.0)
             titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -80,9 +83,9 @@ class CountryTableViewCell: UITableViewCell {
         }
     
         func configureStackView(){
+          
             stackkView.axis = .vertical
             stackkView.translatesAutoresizingMaskIntoConstraints = false
-            
         }
         
     
@@ -103,8 +106,5 @@ class CountryTableViewCell: UITableViewCell {
         titleLabel.widthAnchor.constraint(equalTo: self.stackkView.widthAnchor, multiplier: 0).isActive = true
         descriptionLabel.widthAnchor.constraint(equalTo: self.stackkView.widthAnchor, multiplier: 0).isActive = true
     }
-    
-    
-
 
 }

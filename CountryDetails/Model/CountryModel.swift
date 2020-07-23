@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 struct DataModel {
-    //var photoImage : UIImage?
+    
     var imageURL :String?
     var title      :String
     var description :String

@@ -11,11 +11,13 @@ import UIKit
 class ViewController: UITableViewController,ViewModelDelegate {
     
     let viewModel = ViewModel()
+    let NETWORK_OFFLINE = "You are offline! Connect to Internet."
     var titleLabel :String?
     var activityIndicator = UIActivityIndicatorView(style: .gray)
     var refreshCtrl = UIRefreshControl()
     var image = UIImage()
-    
+    var isNetworkReachable = false
+    let reachability = try? Reachability()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +29,7 @@ class ViewController: UITableViewController,ViewModelDelegate {
         updateUIEvents()
         configureTableView()
         pullToRefresh()
+        setupReachabilityHandler()
         
         //Adding activityIndicator while downloading
         activityIndicator.startAnimating()
@@ -36,8 +39,19 @@ class ViewController: UITableViewController,ViewModelDelegate {
         activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
                
     }
-   
-    /* intial setting up of tableView*/
+    
+    override func viewWillAppear(_ animated: Bool) {
+       
+        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(note:)), name: .reachabilityChanged, object: reachability)
+        reachability?.whenUnreachable = { _ in
+            print("Not reachable")
+        }
+        do{
+            try reachability?.startNotifier()
+        }catch{}
+    }
+
+       /* intial setting up of tableView*/
     
      func configureTableView() {
             tableView.showsVerticalScrollIndicator = false
@@ -63,6 +77,37 @@ class ViewController: UITableViewController,ViewModelDelegate {
          viewModel.downloadDataFromServer()
          self.updateUIEvents()
      }
+    
+    func setupReachabilityHandler(){
+        if reachability?.connection == Reachability.Connection.unavailable{
+            isNetworkReachable = false
+        }else{
+            isNetworkReachable = true
+        }
+    }
+    
+    @objc func reachabilityChanged(note: Notification){
+         let reachability = note.object as! Reachability
+         
+         switch reachability.connection {
+             case .wifi, .cellular:
+                 self.isNetworkReachable = true
+             case .none, .unavailable:
+                 self.isNetworkReachable = false
+         }
+         updateNetworkReachbility()
+     }
+    
+    
+     func updateNetworkReachbility(){
+            DispatchQueue.main.async {
+                if !self.isNetworkReachable{
+                    let alert = UIAlertController(title: "No Network", message: self.NETWORK_OFFLINE, preferredStyle: UIAlertController.Style.alert)
+                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+        }
     
    /*viewmodel delegate method to update UI on main thread and display alertview for error msg*/
     func updateTitle() {
@@ -92,6 +137,7 @@ class ViewController: UITableViewController,ViewModelDelegate {
         
     
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! CountryTableViewCell
+
         let currentLastItem = self.viewModel.dataList[indexPath.row]
          cell.data = currentLastItem
          return cell
