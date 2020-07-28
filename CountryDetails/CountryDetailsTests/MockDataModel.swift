@@ -17,7 +17,6 @@ public final class MockDataModel {
 }
 
 internal extension URL {
-    
     var data: Data {
         return try! Data(contentsOf: self)
     }
