@@ -11,13 +11,10 @@ protocol ViewModelDelegate: class {
     func didFinishUpdates()
 }
 
-
 import UIKit
 import Foundation
 
-class ViewModel
-{
-   
+class ViewModel{
     var dataList : [DataModel]  = [DataModel]()
     weak var delegate: ViewModelDelegate?
     var titleForViewController : String?
@@ -25,10 +22,10 @@ class ViewModel
     var countryDetails = [Rows]()
 
   /*Download data from server */
-  func downloadDataFromServer() {
-    guard let url = URL(string: Url.apiURL) else{return}
-    let networkProcessor = NetworkProcessor(url: url)
-    networkProcessor.downLoadJSONFromURL{(results,error) in
+  func downloadDataFromServer(){
+      guard let url = URL(string: Url.apiURL) else{return}
+      let networkProcessor = NetworkProcessor(url: url)
+            networkProcessor.downLoadJSONFromURL{(results,error) in
       let errorMsg = error?.localizedDescription ?? nil
       self.errorMsg = errorMsg
       self.titleForViewController = results?.title
@@ -37,7 +34,7 @@ class ViewModel
     }
    }
     
-  func loadData()  {
+  func loadData(){
     dataList.removeAll()
     for values in self.countryDetails  {
       let titles = values.title ?? "No title available"
@@ -49,7 +46,7 @@ class ViewModel
     }
     self.delegate?.didFinishUpdates()
     self.delegate?.updateTitle()
-  }
+    }
             
  }
     

@@ -12,20 +12,19 @@ import UIKit
 var imageCache = NSCache<AnyObject,AnyObject>()
 private var task: URLSessionDataTask?
 extension UIImageView{
-    
-    func load(urlString: String) {
-      guard let imageUrl = URL(string: urlString) else {
-        image = nil
-        return
+func load(urlString: String) {
+    guard let imageUrl = URL(string: urlString) else {
+      image = nil
+      return
       }
-      if let cachedImage = imageCache.object(forKey: urlString as NSString) as? UIImage {
-        DispatchQueue.main.async {
-          self.image = cachedImage
-        }
-        return
+    if let cachedImage = imageCache.object(forKey: urlString as NSString) as? UIImage {
+      DispatchQueue.main.async {
+        self.image = cachedImage
       }
-      /* Downloading images on backgrnd thread*/
-      URLSession.shared.dataTask(with: imageUrl) { (data, response, error) in
+      return
+      }
+    /* Downloading images on backgrnd thread*/
+    URLSession.shared.dataTask(with: imageUrl) { (data, response, error) in
         guard let data = data,
           let image = UIImage(data: data),
           error == nil else{
@@ -39,5 +38,5 @@ extension UIImageView{
           self.image = image
         }
       }.resume()
-  }
+   }
 }

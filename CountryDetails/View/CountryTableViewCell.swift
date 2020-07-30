@@ -9,20 +9,19 @@
 import UIKit
 
 class CountryTableViewCell: UITableViewCell {
-  
-  var photo = UIImageView()
-  var titleLabel = UILabel()
-  var descriptionLabel = UILabel()
-  let stackkView = UIStackView()
-  var data : DataModel? {
-    didSet {
-      if let imageUrl = data?.imageURL{
-        photo.load(urlString: imageUrl)
-      }else{
-        photo.image = UIImage(named: "NoImage")
-      }
-      titleLabel.text = data?.title
-      descriptionLabel.text = data?.description
+    var photo = UIImageView()
+    var titleLabel = UILabel()
+    var descriptionLabel = UILabel()
+    let stackkView = UIStackView()
+    var data : DataModel? {
+        didSet {
+           if let imageUrl = data?.imageURL{
+               photo.load(urlString: imageUrl)
+           }else{
+            photo.image = UIImage(named: "NoImage")
+           }
+        titleLabel.text = data?.title
+        descriptionLabel.text = data?.description
       
     }
   }

@@ -8,8 +8,7 @@
 
 import UIKit
 
-class ViewController: UITableViewController,ViewModelDelegate {
-    
+class ViewController: UITableViewController,ViewModelDelegate{
     let viewModel = ViewModel()
     let NETWORK_OFFLINE = "You are offline! Connect to Internet."
     var titleLabel :String?
@@ -18,32 +17,26 @@ class ViewController: UITableViewController,ViewModelDelegate {
     var image = UIImage()
     var isNetworkReachable = false
     let reachability = try? Reachability()
-    
-    override func viewDidLoad() {
+    override func viewDidLoad(){
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         viewModel.delegate = self
-      
-       /* Network Validation from server is done in NetworkProccessor file to handle negative cases*/
+        /* Network Validation from server is done in NetworkProccessor file to handle negative cases*/
         viewModel.downloadDataFromServer()
         updateUIEvents()
         configureTableView()
         pullToRefresh()
         setupReachabilityHandler()
-        
-       //Adding activityIndicator while downloading
+        //Adding activityIndicator while downloading
         activityIndicator.startAnimating()
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(activityIndicator)
         activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-               
     }
-    
-  override func viewWillAppear(_ animated: Bool) {
-    
-    NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(note:)), name: .reachabilityChanged, object: reachability)
-    reachability?.whenUnreachable = { _ in
+  
+   override func viewWillAppear(_ animated: Bool) {
+       NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(note:)), name: .reachabilityChanged, object: reachability)
+       reachability?.whenUnreachable = { _ in
       print("Not reachable")
     }
     do{
@@ -51,75 +44,74 @@ class ViewController: UITableViewController,ViewModelDelegate {
     }catch{}
   }
     
-  /* intial setting up of tableView*/
+   /* intial setting up of tableView*/
     func configureTableView() {
-            tableView.showsVerticalScrollIndicator = false
-            tableView.register(CountryTableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.showsVerticalScrollIndicator = false
+        tableView.register(CountryTableViewCell.self, forCellReuseIdentifier: "Cell")
      }
     
-  func updateUIEvents (){
-    DispatchQueue.main.async { [unowned self] in
-      self.activityIndicator.stopAnimating()
-      self.refreshCtrl.endRefreshing()
+    func updateUIEvents (){
+      DispatchQueue.main.async { [unowned self] in
+        self.activityIndicator.stopAnimating()
+        self.refreshCtrl.endRefreshing()
     }
   }
-  /* pull to refresh implemetation*/
-  func pullToRefresh() {
-    refreshCtrl = UIRefreshControl()
-    refreshCtrl.attributedTitle = NSAttributedString(string: "Loading")
-    refreshCtrl.addTarget(self, action: #selector(ViewController.populateData), for: UIControl.Event.valueChanged)
-    self.tableView.addSubview(refreshCtrl)
+   /* pull to refresh implemetation*/
+    func pullToRefresh() {
+      refreshCtrl = UIRefreshControl()
+      refreshCtrl.attributedTitle = NSAttributedString(string: "Loading")
+      refreshCtrl.addTarget(self, action: #selector(ViewController.populateData), for: UIControl.Event.valueChanged)
+      self.tableView.addSubview(refreshCtrl)
   }
   
-  @objc func populateData() {
-    viewModel.downloadDataFromServer()
-    self.updateUIEvents()
+   @objc func populateData() {
+     viewModel.downloadDataFromServer()
+     self.updateUIEvents()
   }
   
-  func setupReachabilityHandler(){
-    if reachability?.connection == Reachability.Connection.unavailable{
+   func setupReachabilityHandler(){
+      if reachability?.connection == Reachability.Connection.unavailable{
       isNetworkReachable = false
     }else{
       isNetworkReachable = true
     }
   }
     
-  @objc func reachabilityChanged(note: Notification){
-    let reachability = note.object as! Reachability
-    switch reachability.connection {
+   @objc func reachabilityChanged(note: Notification){
+      let reachability = note.object as! Reachability
+      switch reachability.connection {
       case .wifi, .cellular:
         self.isNetworkReachable = true
       case .none, .unavailable:
         self.isNetworkReachable = false
     }
-    updateNetworkReachbility()
+     updateNetworkReachbility()
   }
   
-  
-  func updateNetworkReachbility(){
+    func updateNetworkReachbility(){
     DispatchQueue.main.async {
-      if !self.isNetworkReachable{
-        let alert = UIAlertController(title: "No Network", message: self.NETWORK_OFFLINE, preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+       if !self.isNetworkReachable{
+         let alert = UIAlertController(title: "No Network", message: self.NETWORK_OFFLINE, preferredStyle: UIAlertController.Style.alert)
+         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+         self.present(alert, animated: true, completion: nil)
       }
     }
   }
     
-   /*viewmodel delegate method to update UI on main thread and display alertview for error msg*/
-  func updateTitle() {
-    DispatchQueue.main.async {
-      self.title = self.viewModel.titleForViewController
-      if(self.viewModel.errorMsg != nil) {
-        let alert = UIAlertController(title: "Error", message: self.viewModel.errorMsg, preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+  /*viewmodel delegate method to update UI on main thread and display alertview for error msg*/
+   func updateTitle() {
+     DispatchQueue.main.async {
+       self.title = self.viewModel.titleForViewController
+       if(self.viewModel.errorMsg != nil) {
+          let alert = UIAlertController(title: "Error", message: self.viewModel.errorMsg, preferredStyle: UIAlertController.Style.alert)
+          alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+          self.present(alert, animated: true, completion: nil)
       }
     }
   }
   
-  func didFinishUpdates() {
-    DispatchQueue.main.async {
+   func didFinishUpdates() {
+     DispatchQueue.main.async {
       self.tableView?.reloadData()
     }
   }
@@ -144,9 +136,6 @@ class ViewController: UITableViewController,ViewModelDelegate {
   override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
     return UITableView.automaticDimension
   }
-  
-
-        
 }
 
 

@@ -16,8 +16,8 @@ struct DataModel {
 }
 
 struct WebDetails:Codable {
-   let title :String
-   let rows : [Rows]?
+    let title :String
+    let rows : [Rows]?
 }
 
 struct Rows:Codable {
@@ -27,5 +27,5 @@ struct Rows:Codable {
 }
 
 struct Url {
-   static let apiURL = "https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/facts.json"
+    static let apiURL = "https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/facts.json"
 }
