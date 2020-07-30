@@ -11,12 +11,12 @@ import UIKit
 
 struct DataModel {
     var imageURL :String?
-    var title    :String
+    var title    :String?
     var description :String
 }
 
 struct WebDetails:Codable {
-    let title :String
+    let title :String?
     let rows : [Rows]?
 }
 

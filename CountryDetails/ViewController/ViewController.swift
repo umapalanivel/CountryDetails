@@ -20,6 +20,7 @@ class ViewController: UITableViewController,ViewModelDelegate{
     override func viewDidLoad(){
         super.viewDidLoad()
         viewModel.delegate = self
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: 93/255.0, green: 188/255.0, blue: 210/255.0, alpha: 1.0)
         /* Network Validation from server is done in NetworkProccessor file to handle negative cases*/
         viewModel.downloadDataFromServer()
         updateUIEvents()
@@ -51,7 +52,7 @@ class ViewController: UITableViewController,ViewModelDelegate{
      }
     
     func updateUIEvents (){
-      DispatchQueue.main.async { [unowned self] in
+      DispatchQueue.main.async { [unowned  self] in
         self.activityIndicator.stopAnimating()
         self.refreshCtrl.endRefreshing()
     }
@@ -65,8 +66,9 @@ class ViewController: UITableViewController,ViewModelDelegate{
   }
   
    @objc func populateData() {
-     viewModel.downloadDataFromServer()
+    viewModel.downloadDataFromServer()
      self.updateUIEvents()
+    
   }
   
    func setupReachabilityHandler(){
@@ -101,7 +103,7 @@ class ViewController: UITableViewController,ViewModelDelegate{
   /*viewmodel delegate method to update UI on main thread and display alertview for error msg*/
    func updateTitle() {
      DispatchQueue.main.async {
-       self.title = self.viewModel.titleForViewController
+      self.title = self.viewModel.titleForViewController
        if(self.viewModel.errorMsg != nil) {
           let alert = UIAlertController(title: "Error", message: self.viewModel.errorMsg, preferredStyle: UIAlertController.Style.alert)
           alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))

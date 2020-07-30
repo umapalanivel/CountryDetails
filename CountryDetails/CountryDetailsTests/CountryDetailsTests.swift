@@ -7,11 +7,10 @@
 //
 
 import XCTest
-
+@testable import CountryDetails
 import Mocker
 
 class CountryDetailsTests: XCTestCase {
-  
   static let titleValue = "About Canada"
   struct WebDetails {
     let title: String?
@@ -113,4 +112,3 @@ class CountryDetailsTests: XCTestCase {
   }
   
 }
-
