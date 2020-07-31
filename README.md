@@ -1,7 +1,8 @@
 # CountryDetails
 
 
-The App loads UITableview with customcells data loaded from api
-App doesnt have storyboard 
-Swift compiler version - 4.2
-xcode 11
+Build a native iOS app to support both iPhone and iPad device.
+Display photos with titile and description.
+Supports ios version from ios11.0
+Code tested in iPhone and iPad both in landscape and portrait mode
+Added XCUnit test cases

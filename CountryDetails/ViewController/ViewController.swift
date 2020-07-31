@@ -17,6 +17,7 @@ class ViewController: UITableViewController,ViewModelDelegate{
     var image = UIImage()
     var isNetworkReachable = false
     let reachability = try? Reachability()
+    var cellHeights = [IndexPath: CGFloat]()
     override func viewDidLoad(){
         super.viewDidLoad()
         viewModel.delegate = self
@@ -114,7 +115,10 @@ class ViewController: UITableViewController,ViewModelDelegate{
   
    func didFinishUpdates() {
      DispatchQueue.main.async {
+      let  offset:CGPoint = self.tableView!.contentOffset
       self.tableView?.reloadData()
+      self.tableView.layoutIfNeeded()
+      self.tableView.contentOffset = offset
     }
   }
   
@@ -131,13 +135,30 @@ class ViewController: UITableViewController,ViewModelDelegate{
     return cell
   }
   
+  
+ 
+
+  override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    
+      print("Cell height: \(cell.frame.size.height)")
+      cellHeights[indexPath] = cell.frame.size.height
+  }
+
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     return UITableView.automaticDimension
+
   }
   
   override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+    
+    if let height =  self.cellHeights[indexPath] {
+      print("Height: \(height)")
+      return height
+    }
     return UITableView.automaticDimension
   }
+  
+  
 }
 
 
