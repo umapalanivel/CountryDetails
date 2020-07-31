@@ -7,7 +7,6 @@
 //
 
 import XCTest
-@testable import CountryDetails
 import Mocker
 
 class CountryDetailsTests: XCTestCase {
