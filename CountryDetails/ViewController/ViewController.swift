@@ -135,12 +135,7 @@ class ViewController: UITableViewController,ViewModelDelegate{
     return cell
   }
   
-  
- 
-
   override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-    
-      print("Cell height: \(cell.frame.size.height)")
       cellHeights[indexPath] = cell.frame.size.height
   }
 
@@ -150,9 +145,7 @@ class ViewController: UITableViewController,ViewModelDelegate{
   }
   
   override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-    
     if let height =  self.cellHeights[indexPath] {
-      print("Height: \(height)")
       return height
     }
     return UITableView.automaticDimension
