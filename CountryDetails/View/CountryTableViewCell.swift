@@ -93,4 +93,8 @@ class CountryTableViewCell: UITableViewCell {
     descriptionLabel.widthAnchor.constraint(equalTo: self.stackkView.widthAnchor, multiplier: 0).isActive = true
   }
   
+   override func prepareForReuse() {
+      setNeedsUpdateConstraints()
+      self.setNewConstraints()
+    }
 }

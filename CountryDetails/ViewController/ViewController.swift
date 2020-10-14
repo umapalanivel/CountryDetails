@@ -131,6 +131,7 @@ class ViewController: UITableViewController,ViewModelDelegate{
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! CountryTableViewCell
     let currentLastItem = self.viewModel.dataList[indexPath.row]
+    cell.layoutIfNeeded()
     cell.data = currentLastItem
     return cell
   }
